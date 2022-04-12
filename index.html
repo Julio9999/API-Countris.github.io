@@ -13,7 +13,7 @@
     <title>API Countries</title>
 </head>
 <body class="body" data-theme>
-    <div class="container">
+    <div class="container" id="container">
         <header class="header" >
             <div class="header__heading" data-theme><span>Where in the world?</span><span class="dark-mode"><i class="fa-solid fa-moon"></i>Dark Mode</span></div>
         </header>
@@ -49,19 +49,21 @@
 
     <template id="template">
         <section class="country" data-theme>
-            <button class="country__button-back hide">Back</button>
+            <button class="country__button-back hide" data-theme><i class="fa-solid fa-arrow-left-long"></i>Back</button>
             <img class="country__flag">
             <div class="text-container">
-                <h2 class="text-container__name" id="name"></h2>
-                <span class="text-container__native hide">Native Name: <span id="native-name" class="response"></span></span>
-                <span class="text-container__population">Population: <span id="population" class="response"></span></span>
-                <span class="text-container__region">Region: <span id="region" class="response"></span></span>
-                <span class="text-container__sub-region hide">Sub Region: <span id="sub-region" class="response"></span></span>
-                <span class="text-container__capital">Capital: <span id="capital" class="response"></span></span>
-                <span class="text-container__domain hide">Top Level Domain: <span id="top-level" class="response"></span></span>
-                <span class="text-container__currencies hide" id="currencies"></span>
-                <span class="text-container__languages hide" id="languages">Languages:</span>
-                <div class="text-container__borders hide" id="borders"></div>
+                <h2 class="text-container__name name"></h2>
+                <span class="text-container__item native-name hide">Native Name:</span>
+                <span class="text-container__item population">Population: </span>
+                <span class="text-container__item region">Region:</span>
+                <span class="text-container__item sub-region hide">Sub Region: </span>
+                <span class="text-container__item capital">Capital: </span>
+                <br class="hide">
+                <span class="text-container__item top-level hide">Top Level Domain: </span>
+                <span class="text-container__item currencies hide"></span>
+                <span class="text-container__item languages hide">Languages:</span>
+                <br class="hide">
+                <div class="text-container__item borders hide"></div>
             </div>
         </section>
     </template>
