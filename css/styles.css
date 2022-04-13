@@ -64,8 +64,8 @@ body{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* padding: 1rem; */
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .input-group{
@@ -195,7 +195,6 @@ body{
     background-color: var(--dark-blue-Dark-Mode-Elements);
     display: flex;
     flex-direction: column;
-    align-items:stretch;
     width: 100%;
 }
 
@@ -211,7 +210,7 @@ body{
     border-top-right-radius: inherit;
 }
 
-.country__button-back{
+.country__button-back, .up_button{
     display: block;
     border: none;
     padding: 0.5rem 1.5rem;
@@ -224,6 +223,16 @@ body{
     width: 30%;
 }
 
+.up_button{
+    position: absolute;
+    bottom: 1vh;
+    right: 2vw;
+    display: inline-block;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+
 .text-container{
     display: flex;
     padding-left: 1.5rem;
@@ -233,25 +242,23 @@ body{
     line-height: 30px;
     border-radius: inherit;
     color: inherit;
-    white-space: pre-line;
     text-align: start;
+    
 }
 
 .country-clone .text-container{
     padding: 0;
+    line-height: 45px;
 }
-.text-container__languages{
-    word-spacing: 0px;
-}
-
-.text-container__borders{
-    width: 100%;
+.text-container__item response{
+    white-space: nowrap;
 }
 
 .border_container{
     display: grid;
     gap: 0.5rem;
     grid-template-columns: repeat(3,1fr);
+    margin-top: 1rem;
 }
 
 .border{
@@ -261,6 +268,9 @@ body{
     background-color: var(--dark-blue-Dark-Mode-Elements);
     color: inherit;
     box-shadow: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .response{
     font-weight: 300;
@@ -269,10 +279,6 @@ body{
 .hide{
     display: none;
 }
-/* .text-container__button{
-    border: var(--dark-blue-Dark-Mode-Elements);
-    background-color: var(--dark-blue-Dark-Mode-Elements);
-} */
 
 /* Light theme */
 .light-theme{
