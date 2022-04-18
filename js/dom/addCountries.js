@@ -1,92 +1,110 @@
 const d = document;
-export default function addCountries(template,json, container){
-    
+import setObserver from "./setObserver.js";
+export default function addCountries(template, json, container) {
+
     let $container = d.getElementById(container),
-    $template = d.getElementById(template).content,
-    $fragment = d.createDocumentFragment(),
-    k = 0;
-    
+        $fragment = d.createDocumentFragment(),
+        k = 0;
 
-    $container.innerHTML = '';
-    const callback = (entries) =>{
-        entries.forEach(entry =>{
-            if(entry.isIntersecting){
-                add();
-            }
-        })
-    }
-    const setObserver = () =>{
-        const options ={
-            threshold: 0.9
-        }
-
-        const observer = new IntersectionObserver(callback, options);
-        observer.observe($container.lastElementChild);
-    }
-
+    if(d.querySelector('.country-container')) d.querySelector('.country-container').innerHTML = '';
     add();
 
-
-    function add(){
+    async function add() {
         let internationalNumberFormat = new Intl.NumberFormat('en-US')
-        for(let i=0;i<10 && k < json.length;i++,k++){
-            $template.querySelector('.name').textContent = json[k].name.common;
-            $template.querySelector('.country__flag').src = json[k].flags.png;
-            let nativeName = Object.values(json[k].name.nativeName)[0];
-            $template.querySelector('.native-name .response').textContent = nativeName.common;
-            $template.querySelector('.population .response').textContent =  internationalNumberFormat.format(json[k].population);
-            $template.querySelector('.region .response').textContent =  json[k].region;
-            $template.querySelector('.sub-region .response').textContent = json[k].subregion
-            $template.querySelector('.capital .response').textContent = json[k].capital;
-            if(json[k].hasOwnProperty('tld')) $template.querySelector('.top-level .response').textContent = json[k].tld[0];
-            let currencies = '';
-            
-            for(let currencie in json[k].currencies){
-                currencies += " "+json[k].currencies[currencie].name + " " + json[k].currencies[currencie].symbol + ',';
+        let $template = d.getElementById(template).content;
+        for (let i = 0; i < 10 && k < json.length; i++, k++) {
+            let $clone_template = d.importNode($template, true);
+            $clone_template.querySelector('.name').textContent = json[k].name.common;
+            $clone_template.querySelector('.country__flag').src = json[k].flags.png;
+
+            if (json[k].name.nativeName != undefined) {
+                let nativeName = Object.values(json[k].name.nativeName)[0];
+                $clone_template.querySelector('.native-name .response').textContent = nativeName.common;
+            } else {
+                $clone_template.querySelector('.native-name').innerHTML = '';
             }
-        
-            $template.querySelector('.currencies .response').textContent = " "+ (currencies.replace(/,$/, '.'));
-            
-            let languages = '';
-            for(let language in json[k].languages){
-                languages += " "+json[k].languages[language] + ",";
+
+            if (json[k].subregion != undefined) {
+                $clone_template.querySelector('.sub-region .response').textContent = json[k].subregion
+            } else {
+                $clone_template.querySelector('.sub-region').innerHTML = '';
             }
-            $template.querySelector('.languages .response').textContent = " "+ (languages.replace(/,$/, '.'));
-            
-            let borders = json[k].borders || '';
-            let borders2 = [];
-            
-            if(borders !== ''){  
-                for(let m=0;m<borders.length;m++){
-                    json.forEach(country =>{
-                        if(country.cca3 === borders[m]){
-                            borders2.push(country.name.common);
-                        }
-                    })
+
+            if (json[k].capital != undefined) {
+                $clone_template.querySelector('.capital .response').textContent = json[k].capital;
+            } else {
+                $clone_template.querySelector('.capital').innerHTML = '';
+            }
+
+            if (json[k].currencies != undefined) {
+                let currencies = '';
+                for (let currencie in json[k].currencies) {
+                    currencies += " " + json[k].currencies[currencie].name + " " + json[k].currencies[currencie].symbol + ',';
                 }
-                
-                $template.querySelector('.borders ').innerHTML = '';
-                $template.querySelector('.borders ').innerHTML = 'Border Countries: '
+                $clone_template.querySelector('.currencies .response').textContent = " " + (currencies.replace(/,$/, '.'));
+            } else {
+                $clone_template.querySelector('.currencies').innerHTML = '';
+            }
+
+            if (json[k].languages != undefined) {
+                let languages = '';
+                for (let language in json[k].languages) {
+                    languages += " " + json[k].languages[language] + ",";
+                }
+                $clone_template.querySelector('.languages .response').textContent = " " + (languages.replace(/,$/, '.'));
+            } else {
+                $clone_template.querySelector('.languages').innerHTML = " ";
+            }
+            $clone_template.querySelector('.population .response').textContent = internationalNumberFormat.format(json[k].population);
+            $clone_template.querySelector('.region .response').textContent = json[k].region;
+            if (json[k].hasOwnProperty('tld')) $clone_template.querySelector('.top-level .response').textContent = json[k].tld[0];
+
+            if (json[k].borders != undefined) {
+                let borders = json[k].borders,
+                    borders2 = [],
+                    countryborders = [];
+                if(json.length == 1){
+                    let data = d.getElementById('data');
+                    for (let m = 0; m < borders.length; m++) {
+                        JSON.parse(data.innerHTML).forEach(country => {
+                            if (country.cca3 === borders[m]) {
+                                borders2.push(country.name.common);
+                                countryborders.push(country);
+                            }
+                        })
+                    }
+                }else{
+                    for (let m = 0; m < borders.length; m++) {
+                        json.forEach(country => {
+                            if (country.cca3 === borders[m]) {
+                                borders2.push(country.name.common);
+                                countryborders.push(country);
+                            }
+                        })
+                    }
+                }
+
+                $clone_template.querySelector('.borders ').innerHTML = 'Border Countries: '
                 let $border_container = d.createElement('div');
                 $border_container.classList.add('border_container');
-                borders2.forEach(border =>{
-                    $border_container.innerHTML += `<span class="border" data-theme>${border}</span>`
-                })
-                
-                $template.querySelector('.borders ').append($border_container);
+                for (let j = 0; j < borders2.length; j++) {
+                    $border_container.innerHTML += `<span class="border" data-theme>${borders2[j]} <span class="countryBorders">${JSON.stringify(countryborders[j])}</span></span>`
+                }
+                $clone_template.querySelector('.borders ').append($border_container);
 
             }else{
-                $template.querySelector('.borders ').innerHTML = '';
+                $clone_template.querySelector('.borders ').innerHTML = '';
             }
 
-            let $clone = d.importNode($template, true);
-            $fragment.append($clone);
-            if(i == 9 || k+1 == json.length){
+            $fragment.append($clone_template);
+            if(json.length > 1){
+                if (i == 9 || k + 1 == json.length) {
+                    $container.append($fragment);
+                    setObserver($container, add);
+                }
+            }else{
                 $container.append($fragment);
-                setObserver();
             }
         }
-
     }
 }
-

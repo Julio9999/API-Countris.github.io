@@ -1,5 +1,4 @@
 const d = document;
-
 export default function select(select_container, list, option, focus, arrow){
     let $list = d.querySelector(list),
     $arrow = d.querySelector(arrow),

@@ -1,54 +1,50 @@
+import setMutationObserver from "./setMutationObserver.js";
+import addCountries from "./addCountries.js";
+
 const d = document;
 
-export default function getCountryDetails(container,main,country){
+export default function getCountryDetails(container, main, country, country2) {
     let $container = d.getElementById(container),
-    $main = d.getElementById(main),
-    $clone_country = d.importNode(country, true),
-    $elements = $clone_country.querySelectorAll('.hide');
+        $clone_country = d.importNode(country, true),
+        $elements = $clone_country.querySelectorAll('.hide'),
+        altura = d.documentElement.scrollTop;
 
-    let altura = d.documentElement.scrollTop;
-    
-    d.documentElement.scrollTo(0,0);
-    
-    
+    d.documentElement.scrollTo(0, 0);
     $clone_country.classList.replace('country', 'country-clone');
-    
     $elements.forEach(el => el.classList.remove('hide'));
-    
-    let $upButton = d.createElement('button');
-    $upButton.classList.add('up_button');
-    $upButton.textContent = ' ⬆️ ';
-    $container.removeChild($main);
-    $container.append($clone_country);
-    $container.append($upButton);
 
-    if(d.body.classList.contains('light-theme')) $upButton.classList.add('light-theme');
 
-    let observer = new MutationObserver(()=>{
+    setMutationObserver(d.body, () => {
         $clone_country.classList.toggle('light-theme');
         $clone_country.querySelector('.country__button-back').classList.toggle('light-theme');
         $clone_country.querySelectorAll('.border').forEach(el => el.classList.toggle('light-theme'));
-        $upButton.classList.toggle('light-theme');
-    }),
-    config = {attributes: true};
+    })
 
-    observer.observe(d.body, config);
+    $container.removeChild(main);
+    $container.append($clone_country);
+    if (d.body.classList.contains('light-theme')){
+        $clone_country.classList.add('light-theme');
+        $clone_country.querySelector('.country__button-back').classList.add('light-theme');
+        $clone_country.querySelectorAll('.border').forEach(el => el.classList.add('light-theme'));
+    }
 
-    d.querySelector('.country__button-back').addEventListener('click', (e)=>{
-        e.stopPropagation();
-        console.log('subido');
-        $container.removeChild($clone_country);
-        $container.append($main);
+    $clone_country.querySelector('.country__button-back').addEventListener('click', (e) => {
+        if(main == country){
+            $container.removeChild($clone_country);
+            $container.append(country2);
+        }else{
+            $container.removeChild($clone_country);
+            $container.append(main);
+        }
         d.documentElement.scrollTo(0, altura);
     })
 
-    d.addEventListener('click', (e)=>{
-        if(e.target === $upButton){
-            d.documentElement.scrollTo({
-                behavior: 'smooth', 
-                top: 0
-            });
+    $clone_country.addEventListener('click', (e) => {
+        if (e.target.matches('.border')) {
+            $container.removeChild($clone_country);
+            addCountries('template', [JSON.parse(e.target.querySelector('.countryBorders').innerHTML)], 'container');
+            let $country = d.querySelector('.country');
+            getCountryDetails('container', $country, $country, $clone_country)
         }
     })
-
 }

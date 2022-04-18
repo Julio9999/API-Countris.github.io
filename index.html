@@ -14,20 +14,20 @@
 </head>
 <body class="body" data-theme>
     <div class="container" id="container">
-        <header class="header" >
+        <header class="header">
             <div class="header__heading" data-theme><span>Where in the world?</span><span class="dark-mode"><i class="fa-solid fa-moon"></i>Dark Mode</span></div>
         </header>
 
-        <main id="main">
+        <main id="main" class="main">
             <form class="form">
                 <div class="input-group" data-theme>
                     <i class="fa-solid fa-magnifying-glass input-group__icon"></i>
                     <input class="input-group__input" type="text" placeholder="Search for a country...">
                 </div>
                 <div class="select-group" data-theme>
-                    <div class="select-selected">
-                        <i class="fa-solid fa-angle-down select-selected__arrow"></i>
-                        <span class="select-selected__focus" id="select-focus">Filter by Region</span>
+                    <div class="select">
+                        <i class="fa-solid fa-angle-down select__arrow"></i>
+                        <span class="select__focus" id="select-focus">Filter by Region</span>
                     </div>
 
                     <ul class="select-list">
@@ -37,13 +37,9 @@
                         <li class="select-list__option" data-name="europe">Europe</li>
                         <li class="select-list__option" data-name="oceania">Oceanía</li>
                     </ul>
-                    
                 </div>
-
             </form>
-
             <div class="country-container" id="country-container"></div>
-
         </main>
     </div>
 
@@ -51,22 +47,27 @@
         <section class="country" data-theme>
             <button class="country__button-back hide" data-theme><i class="fa-solid fa-arrow-left-long"></i>Back</button>
             <img class="country__flag">
-            <div class="text-container">
-                <h2 class="text-container__name name"></h2>
-                <span class="text-container__item native-name hide">Native Name: <span class="response"></span></span>
-                <span class="text-container__item population">Population: <span class="response"></span></span>
-                <span class="text-container__item region">Region: <span class="response"></span></span>
-                <span class="text-container__item sub-region hide">Sub Region: <span class="response"></span></span>
-                <span class="text-container__item capital">Capital: <span class="response"></span></span>
-                <br class="hide">
-                <span class="text-container__item top-level hide">Top Level Domain: <span class="response"></span></span>
-                <span class="text-container__item currencies hide">Currencies: <span class="response"></span></span>
-                <span class="text-container__item languages hide">Languages:<span class="response"></span></span>
-                <br class="hide">
-                <div class="text-container__item borders hide"></div>
+            <div class="country-content">
+                <div class="text-container">
+                    <div class="country-heading">
+                        <h2 class="country-heading__item name"></h2>
+                        <span class="country-heading__item native-name hide">Native Name: <span class="response"></span></span>
+                        <span class="country-heading__item population">Population: <span class="response"></span></span>
+                        <span class="country-heading__item region">Region: <span class="response"></span></span>
+                        <span class="country-heading__item sub-region hide">Sub Region: <span class="response"></span></span>
+                        <span class="country-heading__item capital">Capital: <span class="response"></span></span>
+                    </div>
+                    <div class="country-footer">
+                        <span class="country-footer__item top-level hide">Top Level Domain: <span class="response"></span></span>
+                        <span class="country-footer__item currencies hide">Currencies: <span class="response"></span></span>
+                        <span class="country-footer__item languages hide">Languages:<span class="response"></span></span>
+                    </div>
+                </div>
+                <div class="country-borders borders hide"></div>
             </div>
         </section>
     </template>
+
     <script src="./js/index.js" type="module"></script>
 </body>
 </html>
