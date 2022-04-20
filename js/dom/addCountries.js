@@ -1,17 +1,28 @@
 const d = document;
 import setObserver from "./setObserver.js";
-export default function addCountries(template, json, container) {
+export default function addCountries(template, json, container, e) {
 
-    let $container = d.getElementById(container),
-        $fragment = d.createDocumentFragment(),
+    let $fragment = d.createDocumentFragment(),
         k = 0;
 
-    if(d.querySelector('.country-container')) d.querySelector('.country-container').innerHTML = '';
+        if (d.querySelector('.country-container')) d.querySelector('.country-container').innerHTML = '';
+
+        if(e){
+            if(e.type != 'DOMContentLoaded'){
+                if(d.getElementById('button')){
+                    let $button = d.getElementById('button');
+                    $button.classList.remove('hide');
+                }
+            }
+        }
+        
     add();
 
     async function add() {
         let internationalNumberFormat = new Intl.NumberFormat('en-US')
         let $template = d.getElementById(template).content;
+        
+        
         for (let i = 0; i < 10 && k < json.length; i++, k++) {
             let $clone_template = d.importNode($template, true);
             $clone_template.querySelector('.name').textContent = json[k].name.common;
@@ -31,7 +42,15 @@ export default function addCountries(template, json, container) {
             }
 
             if (json[k].capital != undefined) {
-                $clone_template.querySelector('.capital .response').textContent = json[k].capital;
+                if (json[k].capital.length > 1) {
+                    let capitals = '';
+                    json[k].capital.forEach(cap => {
+                        capitals += " " + cap + ",";
+                    })
+                    $clone_template.querySelector('.capital .response').textContent = " " + (capitals.replace(/,$/, '.'));
+                } else {
+                    $clone_template.querySelector('.capital .response').textContent = json[k].capital;
+                }
             } else {
                 $clone_template.querySelector('.capital').innerHTML = '';
             }
@@ -63,27 +82,15 @@ export default function addCountries(template, json, container) {
                 let borders = json[k].borders,
                     borders2 = [],
                     countryborders = [];
-                if(json.length == 1){
-                    let data = d.getElementById('data');
-                    for (let m = 0; m < borders.length; m++) {
-                        JSON.parse(data.innerHTML).forEach(country => {
-                            if (country.cca3 === borders[m]) {
-                                borders2.push(country.name.common);
-                                countryborders.push(country);
-                            }
-                        })
-                    }
-                }else{
-                    for (let m = 0; m < borders.length; m++) {
-                        json.forEach(country => {
-                            if (country.cca3 === borders[m]) {
-                                borders2.push(country.name.common);
-                                countryborders.push(country);
-                            }
-                        })
-                    }
+                let data = d.getElementById('data');
+                for (let m = 0; m < borders.length; m++) {
+                    JSON.parse(data.innerHTML).forEach(country => {
+                        if (country.cca3 === borders[m]) {
+                            borders2.push(country.name.common);
+                            countryborders.push(country);
+                        }
+                    })
                 }
-
                 $clone_template.querySelector('.borders ').innerHTML = 'Border Countries: '
                 let $border_container = d.createElement('div');
                 $border_container.classList.add('border_container');
@@ -92,18 +99,18 @@ export default function addCountries(template, json, container) {
                 }
                 $clone_template.querySelector('.borders ').append($border_container);
 
-            }else{
+            } else {
                 $clone_template.querySelector('.borders ').innerHTML = '';
             }
 
             $fragment.append($clone_template);
-            if(json.length > 1){
+            if (json.length > 1) {
                 if (i == 9 || k + 1 == json.length) {
-                    $container.append($fragment);
-                    setObserver($container, add);
+                    container.append($fragment);
+                    setObserver(container, add);
                 }
-            }else{
-                $container.append($fragment);
+            } else {
+                container.append($fragment);
             }
         }
     }

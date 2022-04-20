@@ -15,9 +15,10 @@
 <body class="body" data-theme>
     <div class="container" id="container">
         <header class="header">
-            <div class="header__heading" data-theme><span>Where in the world?</span><span class="dark-mode"><i class="fa-solid fa-moon"></i>Dark Mode</span></div>
+            <div class="heading" data-theme><span class="heading__text">Where in the world?</span><span class="heading__dark-mode"><i class="fa-solid fa-moon"></i>Dark Mode</span></div>
         </header>
 
+        
         <main id="main" class="main">
             <form class="form">
                 <div class="input-group" data-theme>
@@ -29,7 +30,7 @@
                         <i class="fa-solid fa-angle-down select__arrow"></i>
                         <span class="select__focus" id="select-focus">Filter by Region</span>
                     </div>
-
+                    
                     <ul class="select-list">
                         <li class="select-list__option" data-name="africa">Africa</li>
                         <li class="select-list__option" data-name="americas">America</li>
@@ -39,13 +40,15 @@
                     </ul>
                 </div>
             </form>
+            
+            <button class="button-home hide" id="button" data-theme><i class="fa-solid fa-arrow-left-long"></i>Back</button>
             <div class="country-container" id="country-container"></div>
         </main>
     </div>
 
     <template id="template">
         <section class="country" data-theme>
-            <button class="country__button-back hide" data-theme><i class="fa-solid fa-arrow-left-long"></i>Back</button>
+            <button class="country__button-back hide"  data-theme><i class="fa-solid fa-arrow-left-long"></i>Back</button>
             <img class="country__flag">
             <div class="country-content">
                 <div class="text-container">

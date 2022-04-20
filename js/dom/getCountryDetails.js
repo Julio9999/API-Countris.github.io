@@ -42,7 +42,7 @@ export default function getCountryDetails(container, main, country, country2) {
     $clone_country.addEventListener('click', (e) => {
         if (e.target.matches('.border')) {
             $container.removeChild($clone_country);
-            addCountries('template', [JSON.parse(e.target.querySelector('.countryBorders').innerHTML)], 'container');
+            addCountries('template', [JSON.parse(e.target.querySelector('.countryBorders').innerHTML)], $container, e);
             let $country = d.querySelector('.country');
             getCountryDetails('container', $country, $country, $clone_country)
         }
