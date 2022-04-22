@@ -4,7 +4,7 @@ import changeTheme from "./dom/dark-mode.js";
 import addCountries from "./dom/addCountries.js";
 import getCountryDetails  from "./dom/getCountryDetails.js";
 import home from "./dom/homeButton.js";
-import setMutationObserver from "./dom/setMutationObserver.js";
+import upButton from "./dom/upBotton.js";
 const d = document;
 let json = '';
 
@@ -54,6 +54,7 @@ d.addEventListener('DOMContentLoaded', async(e)=>{
     addCountries('template',json, $container, e);
     let $item = d.querySelector('.country-container');
     home('main', $item, 'button', d.getElementById('select-focus'));
+    upButton(d.getElementById('up-button'));
 })
 
 

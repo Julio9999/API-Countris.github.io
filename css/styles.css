@@ -26,8 +26,19 @@ body{
     min-width: 375px;
 }
 
+.up-button{
+    position: fixed;
+    bottom: 2vh;
+    right: 1vw;
+    padding: 1rem;
+    background-color: var(--dark-blue-Dark-Mode-Elements);
+    border: 1px inherit solid;
+    color: inherit;
+    border-radius: 5px;
+    z-index: 10;
+}
+
 .container{
-    padding: 6rem 1rem;
     position: relative;
     box-sizing: border-box;
 }
@@ -43,10 +54,11 @@ body{
     display: flex;  
     justify-content: space-between;
     font-weight: 600;
-    position: absolute; 
-    top: 0;
+    /* position: sticky; 
+    top: 0px;
     width: 100%; 
-    left: 0;
+    z-index: 10; */
+    
 }
 
 .heading{
@@ -238,6 +250,7 @@ body{
     background-color: inherit;
     margin-top: 2rem;
     box-shadow: none !important;
+    padding: 2rem;
 }
 
 .country__flag{
@@ -255,7 +268,7 @@ body{
     border-radius: 0;
 }
 
-.country__button-back, .button-home{
+.country__button-back, .button-home {
     display: block;
     border: none;
     padding: 0.5rem 1rem;
@@ -361,6 +374,9 @@ body{
 
 
 @media screen and (min-width: 1350px){
+    .container{
+        padding: 0rem 1rem; 
+    }
     .country-container{
         grid-template-columns: repeat(4,1fr);
         gap: 4rem;
