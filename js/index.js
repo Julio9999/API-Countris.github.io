@@ -25,17 +25,12 @@ d.addEventListener('click', async(e)=>{
         d.querySelector('.main').append($container);
         addCountries('template',json,$container , e);
     }else if(e.target.matches('.country *')){
-        if(e.target.matches('.response')){
-            getCountryDetails('container', d.querySelector('.main'), e.target.parentElement.parentElement.parentElement.parentElement.parentElement);
-        }else if(e.target.matches('.country-heading__item')){
-            getCountryDetails('container', d.querySelector('.main'), e.target.parentElement.parentElement.parentElement.parentElement);
-        }else if(e.target.matches('.country-heading')){
-            getCountryDetails('container', d.querySelector('.main'), e.target.parentElement.parentElement.parentElement);
-        }else if(e.target.matches('.text-container')){
-            getCountryDetails('container', d.querySelector('.main'), e.target.parentElement.parentElement);
-        }else if(e.target.matches('.country-content')){
-            getCountryDetails('container', d.querySelector('.main'), e.target.parentElement);
+        let $country = e.target;
+        while(!$country.parentElement.matches('.country')){
+            $country = $country.parentElement;
         }
+        $country = $country.parentElement;
+        getCountryDetails('container', d.querySelector('.main'), $country);
     }
 })
 

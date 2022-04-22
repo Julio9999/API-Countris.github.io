@@ -241,6 +241,7 @@ body{
     flex-direction: column;
     width: 100%;
     align-items:stretch;
+    border: 1px black solid;
 }
 
 
